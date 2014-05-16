@@ -1,8 +1,23 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Create a matrix object which caches its inverse once calculated
+## with the cacheSolve function
 
-## Write a short comment describing this function
+## Examples:
+#  m <- makeCacheMatrix(matrix(1:4, 2, 2)) 
+#  m$get()
+#  m$set(c(2, 3, 2, 2), 2, 2)
+#  m$getInverse()
+#  (don't use the m$setInverse() directly!)
+#  cacheSolve(m)
 
+
+# Create the "cached matrix" object
+# 
+# Args:
+#  x: a numerical matrix which is invertible
+#
+# Returns:
+#  the list of methods (get, set, getInverse, setInverse) applicable to the object
+#
 makeCacheMatrix <- function(x = matrix()) {
     
     # get: return the matrix itself
@@ -27,15 +42,23 @@ makeCacheMatrix <- function(x = matrix()) {
         inv <<- m
     }
     
-    inv <<- NULL  #why? and why not <<- ?
-
+    inv <<- NULL  #why? 
+    
     # return the available methods for makeCacheMatrix
     list(get=get, set=set, getInverse=getInverse, setInverse=setInverse)
 }
 
 
-## Write a short comment describing this function
-
+# Return the inverse of the matrix, either by calculating the value 
+#   or retrieving it from a cache. When the solution is calculated,
+#   it is cached so it doesn't need to be re-calculated.
+#
+# Args:
+#  x: the cached matrix object
+#
+# Returns:
+#  The inverse of the matrix inside x
+#
 cacheSolve <- function(x, ...) {
     
     # check for available inverse for matrix
@@ -45,9 +68,7 @@ cacheSolve <- function(x, ...) {
     if (is.null(inv)) {
         solve(x$get()) -> inv
         x$setInverse(inv)
-    } else {
-        print("inverse cached")
-    }
+    } 
     
     ## Return a matrix that is the inverse of 'x'
     inv
