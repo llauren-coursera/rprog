@@ -1,3 +1,78 @@
+### Cached Matrix
+
+In this programming assignment, we implemented a _cached matrix_ in R.
+We were given example code how a cached _vector_ would be implemented
+and our task was "simply" to apply this to a matrix. For an R neophyte
+like me, this took some thinking. Thankfully, the example code was
+complete and did run as suggested, even if it looked an awful lot like
+just meta-code.
+
+## Examples
+
+`m <- makeCacheMatrix(matrix(1:4, 2, 2))`
+
+This will create a matrix "object" (if that's the correct R terminology,
+since it's essentially a named function) named `m`, with two rows and 
+two columns, and containing values one through four.
+
+`m$get()`
+
+This will return the matrix `m` so we can see that it really is what we
+defined above.
+
+
+`m$set(c(2, 3, 2, 2), 2, 2)`
+
+This changes the values of the matrix to 2, 3, 2, 2 (row by column). The
+dimensions are retained.
+
+`m$getInverse()`
+
+This will return the inverse, if it is calculated. Otherwise it returns 
+`NULL`.
+
+`cacheSolve(m)`
+
+This will calculate the inverse of the matrix `m` and cache the value. It 
+uses the function `m$setInverse()`, which shouldn't be called directly by
+the uer.
+
+
+## The functions within
+
+### makeCacheMatrix <- function(x = matrix())
+
+Creates a "cached matrix".
+
+*Arguments:* 
+  x: a numerical matrix which is invertible
+
+
+*Returns:*
+  the list of methods (get, set, getInverse, setInverse) applicable to the object
+
+*Functions* are described in the code comments and in the examples above.
+
+
+## cacheSolve <- function(x, ...) 
+
+Returns the inverse of the matrix, either by calculating the value or retrieving 
+it from a cache. When the solution is calculated, it is cached so it doesn't need to 
+be re-calculated.
+
+Again, the functions are described within the code comments.
+
+*Arguments:*
+  x: the cached matrix object
+
+*Returns:*
+  The inverse of the matrix inside x
+
+
+_Original documentation follows_ 
+
+---
+
 ### Introduction
 
 This second programming assignment will require you to write an R
